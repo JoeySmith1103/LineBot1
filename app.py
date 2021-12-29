@@ -64,14 +64,14 @@ def callback():
         events = parser.parse(body, signature)
     except InvalidSignatureError:
         abort(400)
-
+    print(111111111111111111111111111111111111111)
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
             continue
-
+        print(2222222222222222222222222222222222)
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text=event.message.text)
         )

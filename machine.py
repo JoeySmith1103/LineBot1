@@ -1,7 +1,7 @@
 from fsm import TocMachine
 def createMachine ():
     machine = TocMachine(
-        states=["user", "state", "fsm", "multiple"],
+        states=["user", "state", "fsm", "multiple", "cancel"],
         transitions=[
             {
                 "trigger": "advance",
@@ -27,7 +27,19 @@ def createMachine ():
                 "dest": "state",
                 "conditions": "is_going_to_state"
             },
-            {"trigger": "go_back", "source": ["state", "fsm"], "dest": "user"},
+            {
+                "trigger": "advance",
+                "source": "state",
+                "dest": "cancel",
+                "conditions": "is_going_to_cancel"
+            },
+            {
+                "trigger": "advance",
+                "source": "fsm",
+                "dest": "cancel",
+                "conditions": "is_going_to_cancel"
+            },
+            {"trigger": "go_back", "source": ["cancel"], "dest": "user"},
         ],
         initial="user",
         auto_transitions=False,

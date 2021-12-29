@@ -83,7 +83,7 @@ def webhook_handler():
 
         if event.source.user_id not in machine:
             machine[event.source.user_id] = createMachine()
-        response = machine.advance(event)
+        response = machine[event.source.user_id].advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
 

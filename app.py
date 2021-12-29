@@ -13,11 +13,9 @@ from utils import send_text_message
 
 load_dotenv()
 
-
 machine = {}
 
 app = Flask(__name__, static_url_path="")
-
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
@@ -91,9 +89,56 @@ def webhook_handler():
     return "OK"
 
 
+a = TocMachine(
+    states=["user", "state", "fsm", "multiple", "cancel"],
+    transitions=[
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "state",
+            "conditions": "is_going_to_state",
+        },
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "fsm",
+            "conditions": "is_going_to_fsm",
+        },
+        {
+            "trigger": "advance",
+            "source": "state",
+            "dest": "multiple",
+            "conditions": "is_going_to_multiple"
+        },
+        {
+            "trigger": "advance",
+            "source": "multiple",
+            "dest": "state",
+            "conditions": "is_going_to_state"
+        },
+        {
+            "trigger": "advance",
+            "source": "state",
+            "dest": "cancel",
+            "conditions": "is_going_to_cancel"
+        },
+        {
+            "trigger": "advance",
+            "source": "fsm",
+            "dest": "cancel",
+            "conditions": "is_going_to_cancel"
+        },
+        {"trigger": "go_back", "source": ["cancel"], "dest": "user"},
+    ],
+    initial="user",
+    auto_transitions=False,
+    show_conditions=True,
+)
+
+
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    a.get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
 
 

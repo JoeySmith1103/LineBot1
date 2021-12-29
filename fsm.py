@@ -21,7 +21,7 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         send_text_message(reply_token, "Enter state")
 
-    def on_exit_state(self):
+    def on_exit_state(self, event):
         print("Leaving state")
 
     def on_enter_fsm(self, event):
@@ -47,5 +47,5 @@ class TocMachine(GraphMachine):
         send_text_message(reply_token, "cancel, back to user")
         self.go_back()
 
-    def on_exit_fsm(self):
+    def on_exit_fsm(self, event):
         print("Leaving fsm")

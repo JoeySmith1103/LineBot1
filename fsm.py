@@ -20,7 +20,6 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, "Enter state")
-        self.go_back()
 
     def on_exit_state(self):
         print("Leaving state")
@@ -30,7 +29,6 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_image_url(reply_token, "https://github.com/JoeySmith1103/LineBot1/blob/master/fsm.png?raw=true")
-        self.go_back()
 
     def is_going_to_multiple(self, event):
         text = event.message.text
@@ -47,6 +45,7 @@ class TocMachine(GraphMachine):
     def on_enter_cancel(self, event):
         reply_token = event.reply_token
         send_text_message(reply_token, "cancel, back to user")
+        self.go_back()
 
     def on_exit_fsm(self):
         print("Leaving fsm")

@@ -27,7 +27,7 @@ def createMachine ():
                 "dest": "state",
                 "conditions": "is_going_to_state"
             },
-            {"trigger": "go_back", "source": ["state"], "dest": "user"},
+            {"trigger": "go_back", "source": ["state", "fsm"], "dest": "user"},
         ],
         initial="user",
         auto_transitions=False,

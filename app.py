@@ -13,39 +13,7 @@ from utils import send_text_message
 
 load_dotenv()
 
-a = TocMachine(
-    states=["user", "state", "fsm", "multiple"],
-    transitions=[
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state",
-            "conditions": "is_going_to_state",
-        },
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "fsm",
-            "conditions": "is_going_to_fsm",
-        },
-        {
-            "trigger": "advance",
-            "source": "state",
-            "dest": "multiple",
-            "conditions": "is_going_to_multiple"
-        },
-        {
-            "trigger": "advance",
-            "source": "multiple",
-            "dest": "state",
-            "conditions": "is_going_to_state"
-        },
-        {"trigger": "go_back", "source": ["state", "fsm"], "dest": "user"},
-    ],
-    initial="user",
-    auto_transitions=False,
-    show_conditions=True,
-)
+
 machine = {}
 
 app = Flask(__name__, static_url_path="")
@@ -124,7 +92,7 @@ def webhook_handler():
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    a.get_graph().draw("fsm.png", prog="dot", format="png")
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
 
 

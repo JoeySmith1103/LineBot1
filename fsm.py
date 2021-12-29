@@ -34,6 +34,7 @@ class TocMachine(GraphMachine):
 
     def is_going_to_multiple(self, event):
         text = event.message.text
+        print(text)
         return text.lower() == "check multiple user"
 
     def on_enter_multiple(self, event):

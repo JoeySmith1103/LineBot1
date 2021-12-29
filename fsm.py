@@ -7,30 +7,38 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
-    def is_going_to_state1(self, event):
+    def is_going_to_state(self, event):
         text = event.message.text
-        return text.lower() == "go to state1"
+        return text.lower() == "go to state"
 
-    def is_going_to_state2(self, event):
+    def is_going_to_fsm(self, event):
         text = event.message.text
         return text.lower() == "fsm"
 
-    def on_enter_state1(self, event):
-        print("I'm entering state1")
+    def on_enter_state(self, event):
+        print("I'm entering state")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state1")
+        send_text_message(reply_token, "Enter state")
         self.go_back()
 
-    def on_exit_state1(self):
-        print("Leaving state1")
+    def on_exit_state(self):
+        print("Leaving state")
 
-    def on_enter_state2(self, event):
-        print("I'm entering state2")
+    def on_enter_fsm(self, event):
+        print("I'm entering fsm")
 
         reply_token = event.reply_token
         send_image_url(reply_token, "https://github.com/JoeySmith1103/LineBot1/blob/master/fsm.png?raw=true")
         self.go_back()
 
-    def on_exit_state2(self):
-        print("Leaving state2")
+    def is_going_to_multiple(self, event):
+        text = event.message.text
+        return text.lower() == "check multiple user"
+
+    def on_enter_multiple(self, event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "I'm in multiple")
+
+    def on_exit_fsm(self):
+        print("Leaving fsm")

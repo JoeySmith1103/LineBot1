@@ -41,5 +41,12 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         send_text_message(reply_token, "I'm in multiple")
 
+    def is_going_to_cancel(self, event):
+        text = event.message.text
+        return text.lower() == "cancel"
+    def on_enter_cancel(self, event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "cancel, back to user")
+
     def on_exit_fsm(self):
         print("Leaving fsm")

@@ -29,7 +29,7 @@ class TocMachine(GraphMachine):
         print("I'm entering state2")
 
         reply_token = event.reply_token
-        send_image_url(reply_token, "https: // github.com / JoeySmith1103 / LineBot1 / blob / master / fsm.png?raw = true")
+        send_image_url(reply_token, "https://github.com/JoeySmith1103/LineBot1/blob/master/fsm.png?raw=true")
         self.go_back()
 
     def on_exit_state2(self):

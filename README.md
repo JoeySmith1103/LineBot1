@@ -4,6 +4,8 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
 
+F74096116 曾瑜華
+
 
 Template Code for TOC Project 2020
 
@@ -76,14 +78,28 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 ## Usage
 The initial state is set to `user`.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+Every time `user` state is triggered to `advance` to another state
 
 * user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+    * Input: "go to state"
+        * Reply: "Enter state"
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+    * Input: "fsm"
+        * Reply:
+        - ![menu](./img/show-fsm.png)
+* state
+   * Input: "check multiple user"
+        * Reply: "I'm in multiple"
+   * Input: "cancel"
+        * Reply: "cancel, back to user"
+* fsm
+   * Input: "cancel"
+        * Reply: "cancel, back to user"
+* multiple
+   * Input: "go to state"
+        * Reply: "Enter state"
+* cancel
+   * automatically `go_back` to `user` state
 
 ## Deploy
 Setting to deploy webhooks on Heroku.
